@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "687621892805",
+    "firebase_url": "https://kteam-bbaa9.firebaseio.com",
+    "project_id": "kteam-bbaa9",
+    "storage_bucket": "kteam-bbaa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687621892805:android:077d2dcf1fe23945781eac",
+        "android_client_info": {
+          "package_name": "com.example.kteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687621892805-5usmsdreaslkh4ke27d6omobjvdl9582.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClQxGeVi0FAYLXlAWfBSc5YDesbcuTOSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687621892805-5usmsdreaslkh4ke27d6omobjvdl9582.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
