@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register"
+    tools:context=".makeAteam"
+
     android:orientation="vertical"
     >
     <LinearLayout
@@ -54,6 +55,13 @@
             android:layout_height="wrap_content"
             android:hint="주 경기지역"
             android:id="@+id/stadium"/>
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="팀 소개"
+            android:id="@+id/teamInformation"
+            />
+
 
 
 
@@ -72,5 +80,4 @@
 
 
     </LinearLayout>
-
 </LinearLayout>

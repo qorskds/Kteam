@@ -56,6 +56,7 @@ public class Register extends AppCompatActivity {
         final EditText heightText =(EditText)findViewById(R.id.heightText);
         final EditText nicknameText=(EditText)findViewById(R.id.nicknameText);
         final EditText positionText = (EditText)findViewById(R.id.positionText);
+        final EditText characterText = (EditText)findViewById(R.id.characterText);
 
 
 
@@ -63,17 +64,18 @@ public class Register extends AppCompatActivity {
         SingUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (emailText.getText().toString().isEmpty()||ageText.getText().toString().isEmpty()||heightText.getText().toString().isEmpty()||passwordText.getText().toString().
+                        isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                    dialog = builder.setMessage(("빈칸이 있습니다.")).setPositiveButton("확인", null).create();
+                    dialog.show();
+                    return;
+                }
                 firebaseAuth.createUserWithEmailAndPassword(emailText.getText().toString(),passwordText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            if (emailText.getText().toString().isEmpty()||ageText.getText().toString().isEmpty()||heightText.getText().toString().isEmpty()||passwordText.getText().toString().
-                                    isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                                dialog = builder.setMessage(("빈칸이 있습니다.")).setPositiveButton("확인", null).create();
-                                dialog.show();
-                                return;
-                            }
+
                             Toast.makeText(Register.this,"회원가입 성공",Toast.LENGTH_SHORT).show();
                             String uid = FirebaseAuth.getInstance().getUid();
                             Map<String,Object> tmp = new HashMap<>();
@@ -83,9 +85,11 @@ public class Register extends AppCompatActivity {
                             tmp.put("nicknameText",nicknameText.getText().toString());
                             tmp.put("positionText",positionText.getText().toString());
                             tmp.put("bulid",bulidSpinner.getSelectedItem().toString());
+                            tmp.put("character",characterText.getText().toString());
 
                             mdatabase.child("users").child(uid).updateChildren(tmp);
                             Intent intent = new Intent(Register.this, LoginActivity.class);
+                            finish();
                             Register.this.startActivity(intent);
 
                         }else{

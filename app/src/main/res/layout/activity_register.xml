@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:hint="NickName"
             android:id="@+id/nicknameText"/>
+
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -71,6 +72,12 @@
             android:layout_height="wrap_content"
             android:hint="Height"
             android:id="@+id/heightText"
+            />
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="Character"
+            android:id="@+id/characterText"
             />
         <Spinner
             android:layout_width="100dp"
