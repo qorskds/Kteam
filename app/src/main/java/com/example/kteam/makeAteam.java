@@ -33,6 +33,8 @@ public class makeAteam extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_ateam);
 
+        final String uid = firebaseAuth.getUid();
+
         mdatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         final EditText teamName = (EditText)findViewById(R.id.teamName);
@@ -77,6 +79,12 @@ public class makeAteam extends AppCompatActivity {
                         tmp.put("stadium",stadium.getText().toString());
                         tmp.put("teamInformation",teamInformation.getText().toString());
                         mdatabase.child("teams").child(teamName.getText().toString()).updateChildren(tmp);
+
+                        Map<String, Object> item =new HashMap<>();
+                        item.put("myTeamName",teamName.getText().toString());
+                        mdatabase.child("user").child(uid).updateChildren(item);
+
+
 
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(makeAteam.this);

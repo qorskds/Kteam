@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,10 @@ public class Information_Revise extends AppCompatActivity {
         final EditText infoRevisePosition =(EditText)findViewById(R.id.infoRevisePosition);
         final TextView infoReviseTeam = (TextView)findViewById(R.id.infoReviseTeam);
         Button infoReviseStoreButton = (Button)findViewById(R.id.infoReviseStore);
+        final Switch playerRegistrationReviseSwitch = (Switch)findViewById(R.id.playerRegistrationReviseSwitch);
+
+
+
 
         final String uid = firebaseAuth.getUid();
 
@@ -63,6 +68,8 @@ public class Information_Revise extends AppCompatActivity {
                     }else if(dataSnapshot1.getKey().equals("positionText")){
                         infoRevisePosition.setText(dataSnapshot1.getValue().toString());
 
+                    }else if(dataSnapshot1.getKey().equals("playerRegister")){
+                        playerRegistrationReviseSwitch.setChecked((boolean)dataSnapshot1.getValue());
                     }
                     if(dataSnapshot1.getKey().equals("team")){
                         infoReviseTeam.setText(dataSnapshot1.getValue().toString());
@@ -87,6 +94,7 @@ public class Information_Revise extends AppCompatActivity {
                 tmp.put("heightText",infoReviseHeight.getText().toString());
                 tmp.put("nicknameText",infoReviseNickname.getText().toString());
                 tmp.put("positionText",infoRevisePosition.getText().toString());
+                tmp.put("playerRegister",playerRegistrationReviseSwitch.isChecked());
 
                 mdatabase.child("users").child(uid).updateChildren(tmp);
                 finish();

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class Information extends AppCompatActivity {
         final TextView infoBuild =(TextView)findViewById(R.id.infoBuild);
         final TextView infoPosition =(TextView)findViewById(R.id.infoPosition);
         final TextView infoTeam =(TextView)findViewById(R.id.infoTeam);
+        final Switch playerRegistrationSwitch = (Switch)findViewById(R.id.playerRegistrationSwitch);
 
 
         final String uid = firebaseAuth.getUid();
@@ -64,6 +66,10 @@ public class Information extends AppCompatActivity {
                     }else if(dataSnapshot1.getKey().equals("positionText")){
                         infoPosition.setText(dataSnapshot1.getValue().toString());
 
+                    }else if(dataSnapshot1.getKey().equals("playerRegister")){
+                        playerRegistrationSwitch.setChecked((Boolean)dataSnapshot1.getValue());
+
+
                     }
                     if(dataSnapshot1.getKey().equals("team")){
                         infoTeam.setText(dataSnapshot1.getValue().toString());
@@ -78,7 +84,8 @@ public class Information extends AppCompatActivity {
 
             }
         });
-        Switch playerRegistrationSwitch = (Switch)findViewById(R.id.playerRegistrationSwitch);
+
+
 
 
         Button infoReviseButton = (Button)findViewById(R.id.infoReviseButton);

@@ -86,6 +86,7 @@ public class Register extends AppCompatActivity {
                             tmp.put("positionText",positionText.getText().toString());
                             tmp.put("bulid",bulidSpinner.getSelectedItem().toString());
                             tmp.put("character",characterText.getText().toString());
+                            tmp.put("playerRegister",false);
 
                             mdatabase.child("users").child(uid).updateChildren(tmp);
                             Intent intent = new Intent(Register.this, LoginActivity.class);
