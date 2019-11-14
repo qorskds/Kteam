@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,17 +55,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView teamInformationText = (TextView)findViewById(R.id.teamInformationText);
 
-        teamInformationText.setOnClickListener(new View.OnClickListener() {
+        TextView mainTeamInformation = (TextView)findViewById(R.id.mainTeamInformation);
+
+        mainTeamInformation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),TeamInformation.class);
+                if(isTeam){
+                    startActivity(intent);
 
+                }else{
+                    Toast.makeText(getApplicationContext(),"팀이 없습니다.",Toast.LENGTH_SHORT);
 
+                }
             }
         });
-
-
 
 
     }
@@ -95,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuLogout:intent= new Intent(getApplicationContext(), LoginActivity.class);
                 finish();
                 startActivity(intent);
-
-
                 return true;
 
 

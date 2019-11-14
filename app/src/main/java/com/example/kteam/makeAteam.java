@@ -33,7 +33,6 @@ public class makeAteam extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_ateam);
 
-        final String uid = firebaseAuth.getUid();
 
         mdatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -43,6 +42,7 @@ public class makeAteam extends AppCompatActivity {
         final EditText teamInformation =(EditText)findViewById(R.id.teamInformation);
 
         Button registerTeam = (Button)findViewById(R.id.registerTeam);
+        final String uid = firebaseAuth.getUid();
 
         registerTeam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class makeAteam extends AppCompatActivity {
 
                         Map<String, Object> item =new HashMap<>();
                         item.put("myTeamName",teamName.getText().toString());
-                        mdatabase.child("user").child(uid).updateChildren(item);
+                        mdatabase.child("users").child(uid).updateChildren(item);
 
 
 
