@@ -40,13 +40,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="25dp"
                 android:layout_gravity="center"
-                android:text="나이 :"/>
+                android:gravity="center"
+                android:text="나이 :"
+                android:textSize="25dp" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,6 +57,30 @@
                 android:id="@+id/infoReviseAge"
                 android:layout_marginLeft="5dp"
                 />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:text="지역 :"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:id="@+id/infoReviseLocation"
+                />
+
 
         </LinearLayout>
 

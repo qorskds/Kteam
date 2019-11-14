@@ -39,6 +39,7 @@ public class Information extends AppCompatActivity {
         final TextView infoBuild =(TextView)findViewById(R.id.infoBuild);
         final TextView infoPosition =(TextView)findViewById(R.id.infoPosition);
         final TextView infoTeam =(TextView)findViewById(R.id.infoTeam);
+        final TextView infoLocation =(TextView)findViewById(R.id.infoLocation);
         final Switch playerRegistrationSwitch = (Switch)findViewById(R.id.playerRegistrationSwitch);
 
 
@@ -68,8 +69,8 @@ public class Information extends AppCompatActivity {
 
                     }else if(dataSnapshot1.getKey().equals("playerRegister")){
                         playerRegistrationSwitch.setChecked((Boolean)dataSnapshot1.getValue());
-
-
+                    }else if(dataSnapshot1.getKey().equals("locationText")){
+                        infoLocation.setText(dataSnapshot1.getValue().toString());
                     }
                     if(dataSnapshot1.getKey().equals("team")){
                         infoTeam.setText(dataSnapshot1.getValue().toString());

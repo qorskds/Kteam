@@ -57,6 +57,7 @@ public class Register extends AppCompatActivity {
         final EditText nicknameText=(EditText)findViewById(R.id.nicknameText);
         final EditText positionText = (EditText)findViewById(R.id.positionText);
         final EditText characterText = (EditText)findViewById(R.id.characterText);
+        final EditText locationText = (EditText)findViewById(R.id.locationText);
 
 
 
@@ -65,7 +66,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (emailText.getText().toString().isEmpty()||ageText.getText().toString().isEmpty()||heightText.getText().toString().isEmpty()||passwordText.getText().toString().
-                        isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()) {
+                        isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()||locationText.getText().toString().isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                     dialog = builder.setMessage(("빈칸이 있습니다.")).setPositiveButton("확인", null).create();
                     dialog.show();
@@ -86,6 +87,8 @@ public class Register extends AppCompatActivity {
                             tmp.put("positionText",positionText.getText().toString());
                             tmp.put("bulid",bulidSpinner.getSelectedItem().toString());
                             tmp.put("character",characterText.getText().toString());
+                            tmp.put("locationText",locationText.getText().toString());
+                            tmp.put("myTeamName","");
                             tmp.put("playerRegister",false);
 
                             mdatabase.child("users").child(uid).updateChildren(tmp);

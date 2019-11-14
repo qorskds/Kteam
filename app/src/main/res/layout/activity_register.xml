@@ -58,6 +58,12 @@
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:hint="Location"
+            android:id="@+id/locationText"/>
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
             android:hint="age"
             android:id="@+id/ageText"
             />

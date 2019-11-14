@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +40,7 @@ public class Information_Revise extends AppCompatActivity {
         final EditText infoReviseBuild =(EditText)findViewById(R.id.infoReviseBuild);
         final EditText infoRevisePosition =(EditText)findViewById(R.id.infoRevisePosition);
         final TextView infoReviseTeam = (TextView)findViewById(R.id.infoReviseTeam);
+        final TextView infoReviseLocation =(TextView)findViewById(R.id.infoReviseLocation);
         Button infoReviseStoreButton = (Button)findViewById(R.id.infoReviseStore);
         final Switch playerRegistrationReviseSwitch = (Switch)findViewById(R.id.playerRegistrationReviseSwitch);
 
@@ -70,6 +73,8 @@ public class Information_Revise extends AppCompatActivity {
 
                     }else if(dataSnapshot1.getKey().equals("playerRegister")){
                         playerRegistrationReviseSwitch.setChecked((boolean)dataSnapshot1.getValue());
+                    }else if(dataSnapshot1.getKey().equals("locationText")){
+                        infoReviseLocation.setText(dataSnapshot1.getValue().toString());
                     }
                     if(dataSnapshot1.getKey().equals("team")){
                         infoReviseTeam.setText(dataSnapshot1.getValue().toString());
@@ -95,6 +100,7 @@ public class Information_Revise extends AppCompatActivity {
                 tmp.put("nicknameText",infoReviseNickname.getText().toString());
                 tmp.put("positionText",infoRevisePosition.getText().toString());
                 tmp.put("playerRegister",playerRegistrationReviseSwitch.isChecked());
+                tmp.put("locationText",infoReviseLocation.getText().toString());
 
                 mdatabase.child("users").child(uid).updateChildren(tmp);
                 finish();
