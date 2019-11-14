@@ -96,7 +96,6 @@ public class TeamInformation extends AppCompatActivity {
                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                       for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                               if(dataSnapshot1.child("myTeamName").getValue().toString().equals(myTeamName)){
-                                  Log.e("asdfasd",dataSnapshot1.child("nicknameText").getValue().toString()+dataSnapshot1.child("positionText").getValue().toString());
                                   teamRecyclerData tmp = new teamRecyclerData(dataSnapshot1.child("nicknameText").getValue().toString(),dataSnapshot1.child("positionText").getValue().toString());
                                   arrayList.add(tmp);
                                   adapter.notifyDataSetChanged();

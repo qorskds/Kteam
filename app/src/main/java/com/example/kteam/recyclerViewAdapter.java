@@ -21,6 +21,7 @@ public class recyclerViewAdapter extends RecyclerView.Adapter<recyclerViewAdapte
         this.arrayList = arrayList;
     }
 
+
     @NonNull
     @Override
     public recyclerViewAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

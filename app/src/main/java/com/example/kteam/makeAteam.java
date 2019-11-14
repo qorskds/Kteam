@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Context;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,12 +85,10 @@ public class makeAteam extends AppCompatActivity {
                         item.put("myTeamName",teamName.getText().toString());
                         mdatabase.child("users").child(uid).updateChildren(item);
 
-
-
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(makeAteam.this);
                         dialog = builder.setMessage(("팀만들기를 성공하셨습니다.")).setPositiveButton("확인", null).create();
                         dialog.show();
+
                         finish();
 
                         return;
@@ -104,17 +103,11 @@ public class makeAteam extends AppCompatActivity {
                 });
 
 
-
-
-
             }
 
 
 
         });
-
-
-
 
 
 

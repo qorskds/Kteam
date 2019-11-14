@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mdatabase;
     private FirebaseAuth firebaseAuth;
     private boolean isTeam=false;
+    String uid;
+
+    public boolean getisTeam() {
+        return isTeam;
+    }
+
+    public void setTeam(boolean team) {
+        isTeam = team;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,45 +42,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mdatabase= FirebaseDatabase.getInstance().getReference();
         firebaseAuth=FirebaseAuth.getInstance();
+        LinearLayout findplayerButton = (LinearLayout)findViewById(R.id.findplayerButton);
 
-
-
-        String uid;
-        uid = firebaseAuth.getUid();
-
-        mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        findplayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    if(dataSnapshot1.getKey().equals("myTeamName")|| dataSnapshot1.getValue().toString().equals("")){
-                        isTeam = false;
-                    }else{
-                        isTeam = true;
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),FindPlayer.class);
+                startActivity(intent);
             }
         });
 
 
-        TextView mainTeamInformation = (TextView)findViewById(R.id.mainTeamInformation);
+
+        uid = firebaseAuth.getUid();
+
+
+
+
+        isTeam();
+
+
+        LinearLayout mainTeamInformation = (LinearLayout)findViewById(R.id.mainTeamInformation);
 
         mainTeamInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),TeamInformation.class);
+
                 if(isTeam){
+                    Intent intent = new Intent(getApplicationContext(),TeamInformation.class);
                     startActivity(intent);
 
                 }else{
-                    Toast.makeText(getApplicationContext(),"팀이 없습니다.",Toast.LENGTH_SHORT);
+                    Toast.makeText(MainActivity.this,"팀이 없습니다..",Toast.LENGTH_SHORT).show();
 
                 }
+
             }
         });
 
@@ -104,5 +112,27 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    void isTeam(){
+
+        mdatabase.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    if(dataSnapshot1.child("myTeamName").getValue().toString().isEmpty()){
+                        isTeam = false;
+                        return;
+                    }else{
+                        isTeam = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
