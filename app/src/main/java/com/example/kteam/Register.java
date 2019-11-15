@@ -30,7 +30,9 @@ public class Register extends AppCompatActivity {
     private AlertDialog dialog;
     private FirebaseAuth firebaseAuth;
     private Spinner bulidSpinner;
-    private ArrayAdapter adapter;
+    private Spinner locationSpinner;
+    private ArrayAdapter bulidadapter;
+    private ArrayAdapter locationadapter;
     String email;
     String password;
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-0!@#$%^&*?_~]{4,16}$");
@@ -45,8 +47,13 @@ public class Register extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         bulidSpinner = (Spinner)findViewById(R.id.bulidSpinner);
-        adapter =ArrayAdapter.createFromResource(this,R.array.bulid,R.layout.support_simple_spinner_dropdown_item);
-        bulidSpinner.setAdapter(adapter);
+        locationSpinner = (Spinner)findViewById(R.id.location);
+
+        locationadapter = ArrayAdapter.createFromResource(this,R.array.city,R.layout.support_simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(locationadapter);
+
+        bulidadapter =ArrayAdapter.createFromResource(this,R.array.bulid,R.layout.support_simple_spinner_dropdown_item);
+        bulidSpinner.setAdapter(bulidadapter);
 
 
 
@@ -57,7 +64,6 @@ public class Register extends AppCompatActivity {
         final EditText nicknameText=(EditText)findViewById(R.id.nicknameText);
         final EditText positionText = (EditText)findViewById(R.id.positionText);
         final EditText characterText = (EditText)findViewById(R.id.characterText);
-        final EditText locationText = (EditText)findViewById(R.id.locationText);
 
 
 
@@ -66,7 +72,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (emailText.getText().toString().isEmpty()||ageText.getText().toString().isEmpty()||heightText.getText().toString().isEmpty()||passwordText.getText().toString().
-                        isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()||locationText.getText().toString().isEmpty()) {
+                        isEmpty()||heightText.getText().toString().isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                     dialog = builder.setMessage(("빈칸이 있습니다.")).setPositiveButton("확인", null).create();
                     dialog.show();
@@ -87,7 +93,7 @@ public class Register extends AppCompatActivity {
                             tmp.put("positionText",positionText.getText().toString());
                             tmp.put("bulid",bulidSpinner.getSelectedItem().toString());
                             tmp.put("character",characterText.getText().toString());
-                            tmp.put("locationText",locationText.getText().toString());
+                            tmp.put("locationText",locationSpinner.getSelectedItem().toString());
                             tmp.put("myTeamName","");
                             tmp.put("playerRegister",false);
 

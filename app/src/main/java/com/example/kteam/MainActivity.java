@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                isTeam();
                 if(isTeam){
                     Intent intent = new Intent(getApplicationContext(),TeamInformation.class);
                     startActivity(intent);
@@ -76,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"팀이 없습니다..",Toast.LENGTH_SHORT).show();
 
                 }
+
+            }
+        });
+        LinearLayout mainTeamFind =(LinearLayout)findViewById(R.id.mainTeamFind);
+        mainTeamFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),FindTeam.class);
+
+                startActivity(intent);
 
             }
         });
@@ -118,13 +129,12 @@ public class MainActivity extends AppCompatActivity {
         mdatabase.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.child("myTeamName").getValue().toString().isEmpty()){
-                        isTeam = false;
+                    if(dataSnapshot1.getKey().equals(uid)||dataSnapshot1.child("myTeamName").getValue().toString().isEmpty()){
+                        isTeam = true;
                         return;
                     }else{
-                        isTeam = true;
+                        isTeam = false;
                     }
                 }
             }

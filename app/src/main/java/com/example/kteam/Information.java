@@ -41,6 +41,7 @@ public class Information extends AppCompatActivity {
         final TextView infoTeam =(TextView)findViewById(R.id.infoTeam);
         final TextView infoLocation =(TextView)findViewById(R.id.infoLocation);
         final Switch playerRegistrationSwitch = (Switch)findViewById(R.id.playerRegistrationSwitch);
+        final TextView infocharacter =(TextView)findViewById(R.id.infocharacter);
 
 
         final String uid = firebaseAuth.getUid();
@@ -71,11 +72,15 @@ public class Information extends AppCompatActivity {
                         playerRegistrationSwitch.setChecked((Boolean)dataSnapshot1.getValue());
                     }else if(dataSnapshot1.getKey().equals("locationText")){
                         infoLocation.setText(dataSnapshot1.getValue().toString());
+                    }else if(dataSnapshot1.getKey().equals("character")){
+                        infocharacter.setText(dataSnapshot1.getValue().toString());
                     }
-                    if(dataSnapshot1.getKey().equals("team")){
-                        infoTeam.setText(dataSnapshot1.getValue().toString());
-                    }else{
+
+                    if(dataSnapshot1.getKey().equals("myTeamName")&&dataSnapshot1.getValue().toString().isEmpty()){
                         infoTeam.setText("팀이 없습니다.");
+                        Log.e("asdf",dataSnapshot1.getValue().toString().isEmpty()+"");
+                    }else if(dataSnapshot1.getKey().equals("myTeamName")){
+                        infoTeam.setText(dataSnapshot1.getValue().toString());
                     }
                 }
             }

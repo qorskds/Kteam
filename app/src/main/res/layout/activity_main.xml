@@ -46,6 +46,7 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:background="@color/colorGray"
+        android:id="@+id/mainTeamFind"
 
         >
         <TextView

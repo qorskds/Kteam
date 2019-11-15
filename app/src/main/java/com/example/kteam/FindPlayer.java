@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -55,12 +56,21 @@ public class FindPlayer extends AppCompatActivity {
                 mdatabase.child("users").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        arrayList.clear();
                         for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-
-                            
-
+                            arrayListtmp= new ArrayList<>();
+                            if(dataSnapshot1.child("nicknameText").getValue().toString().equals(findName.getText().toString())){
+                                findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
+                                        dataSnapshot1.child("bulid").getValue().toString(),dataSnapshot1.child("heightText").getValue().toString(),
+                                        dataSnapshot1.child("positionText").getValue().toString(),dataSnapshot1.child("character").getValue().toString(),dataSnapshot1.child("locationText").getValue().toString());
+                                arrayList.add(tmp);
+                                adapter.notifyDataSetChanged();
+                            }
                         }
-
+                        if(arrayList.size()==0){
+                            Toast.makeText(FindPlayer.this,"위와 같은 이름의 선수가 없습니다.",Toast.LENGTH_SHORT).show();
+                            adapter.notifyDataSetChanged();
+                        }
                     }
 
                     @Override

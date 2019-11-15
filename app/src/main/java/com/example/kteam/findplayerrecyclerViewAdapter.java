@@ -5,14 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class findplayerrecyclerViewAdapter extends RecyclerView.Adapter<findplayerrecyclerViewAdapter.CustomViewHolder> {
 
     private ArrayList<findplayerData> arrayList;
+
 
     public findplayerrecyclerViewAdapter(ArrayList<findplayerData> arrayList) {
         this.arrayList = arrayList;
@@ -40,7 +44,6 @@ public class findplayerrecyclerViewAdapter extends RecyclerView.Adapter<findplay
 
 
     }
-
     @Override
     public int getItemCount() {
         return (null != arrayList? arrayList.size() : 0);

@@ -58,12 +58,6 @@
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:hint="Location"
-            android:id="@+id/locationText"/>
-
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
             android:hint="age"
             android:id="@+id/ageText"
             />
@@ -85,16 +79,32 @@
             android:hint="Character"
             android:id="@+id/characterText"
             />
-        <Spinner
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:id="@+id/bulidSpinner"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Spinner
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:textAlignment="center"
+                android:id="@+id/bulidSpinner"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
 
-            ></Spinner>
+                ></Spinner>
+            <Spinner
+                android:layout_width="160dp"
+                android:layout_height="30dp"
+                android:textAlignment="center"
+                android:id="@+id/location"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                ></Spinner>
 
+
+
+
+
+        </LinearLayout>
 
 
 

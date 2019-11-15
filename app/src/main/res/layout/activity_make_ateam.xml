@@ -30,12 +30,7 @@
         android:orientation="vertical"
         android:gravity="center"
         >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            >
+
             <EditText
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -43,18 +38,29 @@
                 android:id="@+id/teamName"
                 />
 
-        </LinearLayout>
-        <EditText
-            android:layout_width="280dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:hint="팀장"
-            android:id="@+id/teamLeader"
             />
-        <EditText
-            android:layout_width="280dp"
+        <TextView
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:hint="주 경기지역"
-            android:id="@+id/stadium"/>
+            android:text="본인 이름입니다."
+            />
+    </LinearLayout>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stadiumSpinner"
+
+            />
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
