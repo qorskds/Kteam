@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -30,7 +36,12 @@ public class FindPlayer extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private  findplayerrecyclerViewAdapter adapter;
-
+    private Spinner findlocationSpinner;
+    private ArrayAdapter findlocationSpinnerAdapter;
+    private ArrayAdapter findheightAdapter;
+    private Spinner findlowheight;
+    private Spinner findhighheight;
+    private boolean height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +58,47 @@ public class FindPlayer extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         Button findNameButton= (Button)findViewById(R.id.findNameButton);
         final EditText findName = (EditText)findViewById(R.id.findName);
+        findlocationSpinner =(Spinner)findViewById(R.id.findlocationSpinner);
 
+        findlocationSpinnerAdapter = ArrayAdapter.createFromResource(this,R.array.city,R.layout.support_simple_spinner_dropdown_item);
+        findlocationSpinner.setAdapter(findlocationSpinnerAdapter);
+        findlowheight =(Spinner) findViewById(R.id.findlowheight);
+        findhighheight =(Spinner)findViewById(R.id.findhighheight);
+        findheightAdapter =ArrayAdapter.createFromResource(this,R.array.height,R.layout.support_simple_spinner_dropdown_item);
+        findhighheight.setAdapter(findheightAdapter);
+        findlowheight.setAdapter(findheightAdapter);
+        findhighheight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(Integer.parseInt(findhighheight.getSelectedItem().toString())<Integer.parseInt(findlowheight.getSelectedItem().toString())){
+
+                    Toast.makeText(FindPlayer.this,"최소 값보다 작습니다.",Toast.LENGTH_SHORT).show();
+                    findhighheight.setSelection(Integer.parseInt((findlowheight.getSelectedItem().toString())));
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        findlowheight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(Integer.parseInt(findhighheight.getSelectedItem().toString())<Integer.parseInt(findlowheight.getSelectedItem().toString())){
+
+                    Toast.makeText(FindPlayer.this,"최대 값보다 큽니다.",Toast.LENGTH_SHORT).show();
+                    findlowheight.setSelection(Integer.parseInt((findhighheight.getSelectedItem().toString()))-1);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         findNameButton.setOnClickListener(new View.OnClickListener() {
@@ -59,18 +110,24 @@ public class FindPlayer extends AppCompatActivity {
                         arrayList.clear();
                         for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                             arrayListtmp= new ArrayList<>();
-                            if(dataSnapshot1.child("nicknameText").getValue().toString().equals(findName.getText().toString())){
-                                findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
-                                        dataSnapshot1.child("bulid").getValue().toString(),dataSnapshot1.child("heightText").getValue().toString(),
-                                        dataSnapshot1.child("positionText").getValue().toString(),dataSnapshot1.child("character").getValue().toString(),dataSnapshot1.child("locationText").getValue().toString());
-                                arrayList.add(tmp);
-                                adapter.notifyDataSetChanged();
+
+
+                            if(dataSnapshot1.child("playerRegister").getValue().toString().equals("true")
+                                    &&dataSnapshot1.child("locationText").getValue().toString().equals(findlocationSpinner.getSelectedItem())
+                                    && Integer.parseInt((String)findhighheight.getSelectedItem())>=Integer.parseInt(dataSnapshot1.child("heightText").getValue().toString())
+                                    && Integer.parseInt((String)findlowheight.getSelectedItem())<=Integer.parseInt(dataSnapshot1.child("heightText").getValue().toString())
+                            ){
+                                if(dataSnapshot1.child("nicknameText").getValue().toString().equals(findName.getText().toString())){
+                                    findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
+                                            dataSnapshot1.child("bulid").getValue().toString(),dataSnapshot1.child("heightText").getValue().toString(),
+                                            dataSnapshot1.child("positionText").getValue().toString(),dataSnapshot1.child("character").getValue().toString(),dataSnapshot1.child("locationText").getValue().toString());
+                                    arrayList.add(tmp);
+                                    adapter.notifyDataSetChanged();
+                                }
+
                             }
                         }
-                        if(arrayList.size()==0){
-                            Toast.makeText(FindPlayer.this,"위와 같은 이름의 선수가 없습니다.",Toast.LENGTH_SHORT).show();
-                            adapter.notifyDataSetChanged();
-                        }
+
                     }
 
                     @Override
@@ -78,9 +135,9 @@ public class FindPlayer extends AppCompatActivity {
 
                     }
                 });
-
-
-
+                if(arrayList.size()==0){
+                    Toast.makeText(FindPlayer.this,"위와 같은 이름의 선수가 없습니다.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -92,12 +149,15 @@ public class FindPlayer extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    if(dataSnapshot1.hasChildren()){
-                        findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
-                                dataSnapshot1.child("bulid").getValue().toString(),dataSnapshot1.child("heightText").getValue().toString(),
-                                dataSnapshot1.child("positionText").getValue().toString(),dataSnapshot1.child("character").getValue().toString(),dataSnapshot1.child("locationText").getValue().toString());
-                        arrayList.add(tmp);
-                        adapter.notifyDataSetChanged();
+                    if(dataSnapshot1.hasChildren()) {
+                        if (dataSnapshot1.child("playerRegister").getValue().equals(true)) {
+                            findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
+                                    dataSnapshot1.child("bulid").getValue().toString(), dataSnapshot1.child("heightText").getValue().toString(),
+                                    dataSnapshot1.child("positionText").getValue().toString(), dataSnapshot1.child("character").getValue().toString(), dataSnapshot1.child("locationText").getValue().toString());
+                            arrayList.add(tmp);
+                            adapter.notifyDataSetChanged();
+
+                        }
                     }
                 }
             }

@@ -90,6 +90,7 @@ public class Information extends AppCompatActivity {
 
             }
         });
+        playerRegistrationSwitch.setClickable(false);
 
 
 
