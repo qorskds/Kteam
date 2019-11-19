@@ -35,6 +35,8 @@ public class Register extends AppCompatActivity {
     private ArrayAdapter locationadapter;
    private Spinner heightSpinner;
    private ArrayAdapter heightadapter;
+   private Spinner positionSpinner;
+   private ArrayAdapter positionSpinneradapter;
     String email;
     String password;
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-0!@#$%^&*?_~]{4,16}$");
@@ -51,6 +53,10 @@ public class Register extends AppCompatActivity {
         bulidSpinner = (Spinner)findViewById(R.id.bulidSpinner);
         locationSpinner = (Spinner)findViewById(R.id.location);
         heightSpinner=(Spinner)findViewById(R.id.heightText);
+        positionSpinner=(Spinner)findViewById(R.id.positionSpinner);
+
+        positionSpinneradapter= ArrayAdapter.createFromResource(this,R.array.position,R.layout.support_simple_spinner_dropdown_item);
+        positionSpinner.setAdapter(positionSpinneradapter);
 
         locationadapter = ArrayAdapter.createFromResource(this,R.array.city,R.layout.support_simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationadapter);
@@ -68,7 +74,7 @@ public class Register extends AppCompatActivity {
         final EditText emailText = ((EditText) findViewById(R.id.EmailText));
         final EditText ageText =(EditText)findViewById(R.id.ageText);
        final EditText nicknameText=(EditText)findViewById(R.id.nicknameText);
-        final EditText positionText = (EditText)findViewById(R.id.positionText);
+
         final EditText characterText = (EditText)findViewById(R.id.characterText);
 
 
@@ -78,7 +84,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (emailText.getText().toString().isEmpty()||ageText.getText().toString().isEmpty()||passwordText.getText().toString().
-                        isEmpty()||nicknameText.getText().toString().isEmpty()||positionText.getText().toString().isEmpty()) {
+                        isEmpty()||nicknameText.getText().toString().isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                     dialog = builder.setMessage(("빈칸이 있습니다.")).setPositiveButton("확인", null).create();
                     dialog.show();
@@ -96,7 +102,7 @@ public class Register extends AppCompatActivity {
                             tmp.put("ageText",ageText.getText().toString());
                             tmp.put("heightText",heightSpinner.getSelectedItem());
                             tmp.put("nicknameText",nicknameText.getText().toString());
-                            tmp.put("positionText",positionText.getText().toString());
+                            tmp.put("positionText",positionSpinner.getSelectedItem());
                             tmp.put("bulid",bulidSpinner.getSelectedItem().toString());
                             tmp.put("character",characterText.getText().toString());
                             tmp.put("locationText",locationSpinner.getSelectedItem().toString());

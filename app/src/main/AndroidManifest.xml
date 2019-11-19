@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FindTeam"></activity>
+        <activity android:name=".ProPosePopup"></activity>
+        <activity android:name=".MyProposal" />
+        <activity android:name=".PlayerPopup" />
+        <activity android:name=".ResigsterConfirm" />
+        <activity android:name=".teampopup" />
+        <activity android:name=".FindTeam" />
         <activity android:name=".FindPlayer" />
         <activity android:name=".TeamInformation" />
         <activity android:name=".Information_Revise" />

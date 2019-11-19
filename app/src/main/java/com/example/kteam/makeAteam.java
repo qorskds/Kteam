@@ -53,7 +53,6 @@ public class makeAteam extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     if(dataSnapshot1.getKey().equals("nicknameText")){
-                        Log.e("adf",dataSnapshot1.getValue().toString());
                         userName=dataSnapshot1.getValue().toString();
                     }
                 }
@@ -104,6 +103,7 @@ public class makeAteam extends AppCompatActivity {
                         tmp.put("teamLeader",userName);
                         tmp.put("stadium",stadiumSpinner.getSelectedItem());
                         tmp.put("teamInformation",teamInformation.getText().toString());
+                        tmp.put("teamLeaderUid",firebaseAuth.getUid());
                         mdatabase.child("teams").child(teamName.getText().toString()).updateChildren(tmp);
 
                         Map<String, Object> item =new HashMap<>();

@@ -34,6 +34,10 @@ public class Information_Revise extends AppCompatActivity {
     private Spinner buildSpinner;
     private ArrayAdapter buildadapter;
     private ArrayAdapter locationadapter;
+    private ArrayAdapter infoReviseHeightadapter;
+    private Spinner infoReviseHeight;
+    private Spinner infoRevisePositionSpinner;
+    private ArrayAdapter infoRevisePositionSpinnerapdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +48,22 @@ public class Information_Revise extends AppCompatActivity {
 
         locationSpinner = (Spinner)findViewById(R.id.infoReviseLocation);
         buildSpinner =(Spinner)findViewById(R.id.infoReviseBuild);
+        infoReviseHeight =(Spinner) findViewById(R.id.infoReviseHeight);
+        infoRevisePositionSpinner=(Spinner)findViewById(R.id.infoRevisePositionSpinner);
 
 
-
+        infoRevisePositionSpinnerapdapter=ArrayAdapter.createFromResource(this,R.array.position,R.layout.support_simple_spinner_dropdown_item);
+        infoRevisePositionSpinner.setAdapter(infoRevisePositionSpinnerapdapter);
         buildadapter =ArrayAdapter.createFromResource(this,R.array.bulid,R.layout.support_simple_spinner_dropdown_item);
         buildSpinner.setAdapter(buildadapter);
         locationadapter = ArrayAdapter.createFromResource(this,R.array.city,R.layout.support_simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationadapter);
+        infoReviseHeightadapter= ArrayAdapter.createFromResource(this,R.array.height,R.layout.support_simple_spinner_dropdown_item);
+        infoReviseHeight.setAdapter(infoReviseHeightadapter);
 
 
         final EditText infoReviseNickname= (EditText) findViewById(R.id.infoReviseNickname);
         final EditText infoReviseAge = (EditText)findViewById(R.id.infoReviseAge);
-        final EditText infoReviseHeight =(EditText)findViewById(R.id.infoReviseHeight);
-        final EditText infoRevisePosition =(EditText)findViewById(R.id.infoRevisePosition);
-        final TextView infoReviseTeam = (TextView)findViewById(R.id.infoReviseTeam);
         Button infoReviseStoreButton = (Button)findViewById(R.id.infoReviseStore);
         final Switch playerRegistrationReviseSwitch = (Switch)findViewById(R.id.playerRegistrationReviseSwitch);
         final EditText infocharacter =(EditText)findViewById(R.id.nfoRevisecharacter);
@@ -81,13 +87,13 @@ public class Information_Revise extends AppCompatActivity {
                         buildSpinner.setSelection(buildadapter.getPosition(dataSnapshot1.getValue().toString()));
 
                     }else if(dataSnapshot1.getKey().equals("heightText")){
-                        infoReviseHeight.setText(dataSnapshot1.getValue().toString());
+                        infoReviseHeight.setSelection(Integer.parseInt(dataSnapshot1.getValue().toString())-1);
 
                     }else if(dataSnapshot1.getKey().equals("nicknameText")){
                         infoReviseNickname.setText(dataSnapshot1.getValue().toString());
 
                     }else if(dataSnapshot1.getKey().equals("positionText")){
-                        infoRevisePosition.setText(dataSnapshot1.getValue().toString());
+                        infoRevisePositionSpinner.setSelection(infoRevisePositionSpinnerapdapter.getPosition(dataSnapshot1.getValue().toString()));
 
                     }else if(dataSnapshot1.getKey().equals("playerRegister")){
                         playerRegistrationReviseSwitch.setChecked((boolean)dataSnapshot1.getValue());
@@ -96,11 +102,6 @@ public class Information_Revise extends AppCompatActivity {
                         locationSpinner.setSelection(locationadapter.getPosition(dataSnapshot1.getValue().toString()));
                     }else if(dataSnapshot1.getKey().equals("character")){
                         infocharacter.setText(dataSnapshot1.getValue().toString());
-                    }
-                    if(dataSnapshot1.getKey().equals("myTeamName")){
-                        infoReviseTeam.setText(dataSnapshot1.getValue().toString());
-                    }else{
-                        infoReviseTeam.setText("팀이 없습니다.");
                     }
                 }
             }
@@ -117,9 +118,9 @@ public class Information_Revise extends AppCompatActivity {
                 Map<String,Object> tmp = new HashMap<>();
                 tmp.put("ageText",infoReviseAge.getText().toString());
                 tmp.put("bulid",buildSpinner.getSelectedItem());
-                tmp.put("heightText",infoReviseHeight.getText().toString());
+                tmp.put("heightText",infoReviseHeight.getSelectedItem());
                 tmp.put("nicknameText",infoReviseNickname.getText().toString());
-                tmp.put("positionText",infoRevisePosition.getText().toString());
+                tmp.put("positionText",infoRevisePositionSpinner.getSelectedItem());
                 tmp.put("playerRegister",playerRegistrationReviseSwitch.isChecked());
                 tmp.put("character",infocharacter.getText().toString());
                 tmp.put("locationText",locationSpinner.getSelectedItem());

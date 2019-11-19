@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:orientation="vertical"
 
     >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="메뉴"
-            android:gravity="right"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="팀 만들기"
-            android:gravity="center"
-            android:textSize="30dp"
-            />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="메뉴"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="팀 만들기"
+        android:textSize="30dp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="내 정보"
-        android:gravity="center"
-        android:textSize="30dp"
-        />
+        android:textSize="30dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="제안"
+        android:textSize="30dp" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="로그아웃"
-        android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="30dp"
-        />
+        android:gravity="center"
+        android:text="로그아웃"
+        android:textSize="30dp" />
 
 </LinearLayout>

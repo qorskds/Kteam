@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,7 +34,8 @@ public class TeamInformation extends AppCompatActivity {
     private recyclerViewAdapter adapter;
     private String uid;
     private String myTeamName;
-
+    private ImageView teamInformationmessage;
+    private ImageButton message;
 
 
     @Override
@@ -36,96 +43,107 @@ public class TeamInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_information);
 
-        mdatabase= FirebaseDatabase.getInstance().getReference();
-        firebaseAuth= FirebaseAuth.getInstance();
+        mdatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-      recyclerView = (RecyclerView)findViewById(R.id.teamRecyclerView);
-      linearLayoutManager = new LinearLayoutManager(this);
-      recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView = (RecyclerView) findViewById(R.id.teamRecyclerView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-      arrayList = new ArrayList<>();
-      adapter= new recyclerViewAdapter(arrayList);
-      recyclerView.setAdapter(adapter);
-        uid= firebaseAuth.getUid();
+        arrayList = new ArrayList<>();
+        adapter = new recyclerViewAdapter(arrayList);
+        recyclerView.setAdapter(adapter);
+        uid = firebaseAuth.getUid();
+        teamInformationmessage = (ImageView) findViewById(R.id.teamInformationmessage);
 
-        final TextView teamInformationName = (TextView)findViewById(R.id.teamInformationName) ;
-        final TextView teamInformationLeader = (TextView)findViewById(R.id.teamInformationLeader) ;
-        final TextView teamInformationstadium = (TextView)findViewById(R.id.teamInformationstadium) ;
-        final TextView teamInformationsTeamIntroduction = (TextView)findViewById(R.id.teamInformationsTeamIntroduction) ;
-
-
-      mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                  if(dataSnapshot1.getKey().equals("myTeamName")){
-                      myTeamName = dataSnapshot1.getValue().toString();
-
-                      teamInformationName.setText(myTeamName);
-                  }
-              }
+        final TextView teamInformationName = (TextView) findViewById(R.id.teamInformationName);
+        final TextView teamInformationLeader = (TextView) findViewById(R.id.teamInformationLeader);
+        final TextView teamInformationstadium = (TextView) findViewById(R.id.teamInformationstadium);
+        final TextView teamInformationsTeamIntroduction = (TextView) findViewById(R.id.teamInformationsTeamIntroduction);
 
 
-              mdatabase.child("teams").child(myTeamName).addValueEventListener(new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                      for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                          if(dataSnapshot1.getKey().equals("teamLeader")){
-                              teamInformationLeader.setText(dataSnapshot1.getValue().toString());
+        teamInformationmessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeamInformation.this, ResigsterConfirm.class);
+                intent.putExtra("teamName", myTeamName);
+                startActivity(intent);
 
-                          }else if(dataSnapshot1.getKey().equals("stadium")){
-                              teamInformationstadium.setText(dataSnapshot1.getValue().toString());
-
-                          }else if(dataSnapshot1.getKey().equals("teamInformation")){
-                              teamInformationsTeamIntroduction.setText(dataSnapshot1.getValue().toString());
-
-                          }
-
-                      }
+            }
+        });
 
 
-                  }
+        mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.getKey().equals("myTeamName")) {
+                        myTeamName = dataSnapshot1.getValue().toString();
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError databaseError) {
+                        teamInformationName.setText(myTeamName);
+                    }
+                }
 
-                  }
-              });
-              mdatabase.child("users").addValueEventListener(new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                      for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                              if(dataSnapshot1.child("myTeamName").getValue().toString().equals(myTeamName)){
-                                  teamRecyclerData tmp = new teamRecyclerData(dataSnapshot1.child("nicknameText").getValue().toString(),dataSnapshot1.child("positionText").getValue().toString());
-                                  arrayList.add(tmp);
-                                  adapter.notifyDataSetChanged();
-                          }
 
-                      }
-                  }
+                mdatabase.child("teams").child(myTeamName).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (dataSnapshot1.getKey().equals("teamLeader")) {
+                                teamInformationLeader.setText(dataSnapshot1.getValue().toString());
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError databaseError) {
+                            } else if (dataSnapshot1.getKey().equals("stadium")) {
+                                teamInformationstadium.setText(dataSnapshot1.getValue().toString());
 
-                  }
-              });
+                            } else if (dataSnapshot1.getKey().equals("teamInformation")) {
+                                teamInformationsTeamIntroduction.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("teamLeaderUid") && dataSnapshot1.getValue().toString().equals(firebaseAuth.getUid())) {
+                                teamInformationmessage.setVisibility(View.VISIBLE);
 
 
 
+                            }
 
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {
-
-          }
-      });
+                        }
 
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                mdatabase.child("users").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if(dataSnapshot1.child("myTeamName").getValue()== null){
+
+                            }else if (dataSnapshot1.child("myTeamName").getValue().toString().equals(myTeamName)) {
+                                teamRecyclerData tmp = new teamRecyclerData(dataSnapshot1.child("nicknameText").getValue().toString(), dataSnapshot1.child("positionText").getValue().toString());
+                                arrayList.add(tmp);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
 
 
     }

@@ -1,5 +1,6 @@
 package com.example.kteam;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class findplayerrecyclerViewAdapter extends RecyclerView.Adapter<findplayerrecyclerViewAdapter.CustomViewHolder> {
@@ -57,6 +60,8 @@ public class findplayerrecyclerViewAdapter extends RecyclerView.Adapter<findplay
         protected TextView bulid;
         protected TextView character;
         protected TextView location;
+        private  findplayerData item;
+        private Map<String,Object> tmp;
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name=(TextView)itemView.findViewById(R.id.findplayerRecyclernickname);
@@ -65,6 +70,28 @@ public class findplayerrecyclerViewAdapter extends RecyclerView.Adapter<findplay
             this.position=(TextView)itemView.findViewById(R.id.findplayerRecyclerPosition);
             this.character=(TextView)itemView.findViewById(R.id.findplayerRecyclerCharacter);
             this.location=(TextView)itemView.findViewById(R.id.findplayerRecyclerLocation);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    item = null;
+                    int pos = getAdapterPosition();
+
+                    if (pos != RecyclerView.NO_POSITION) {
+                        item = arrayList.get(pos);
+                        tmp = new HashMap<>();
+                        tmp.put("read", "true");
+                    }
+                    Intent intent= new Intent(v.getContext(),PlayerPopup.class);
+                    intent.putExtra("uid",item.getUid());
+
+                    v.getContext().startActivity(intent);
+
+
+
+                }
+            });
         }
     }
 }

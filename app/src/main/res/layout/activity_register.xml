@@ -61,11 +61,11 @@
             android:hint="age"
             android:id="@+id/ageText"
             />
-        <EditText
+        <Spinner
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:hint="Postion"
-            android:id="@+id/positionText"
+            android:id="@+id/positionSpinner"
             />
         <Spinner
             android:layout_width="280dp"

@@ -5,6 +5,8 @@
         android:title="팀 만들기"/>
     <item android:id="@+id/menuMy"
         android:title="내 정보"/>
+    <item android:id="@+id/menupropose"
+        android:title="제안"/>
     <item android:id="@+id/menuLogout"
         android:title="로그아웃"/>
 

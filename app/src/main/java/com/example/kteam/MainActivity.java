@@ -114,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuMy: intent= new Intent(getApplicationContext(), Information.class);
                 startActivity(intent);
                 return true;
+            case R.id.menupropose: intent= new Intent(getApplicationContext(), MyProposal.class);
+                startActivity(intent);
+                return true;
 
             case R.id.menuLogout:intent= new Intent(getApplicationContext(), LoginActivity.class);
                 finish();
@@ -130,13 +133,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.getKey().equals(uid)||dataSnapshot1.child("myTeamName").getValue().toString().isEmpty()){
+                    if(dataSnapshot1.getKey().equals(uid)&&!dataSnapshot1.child("myTeamName").getValue().toString().equals("")){
                         isTeam = true;
                         return;
-                    }else{
-                        isTeam = false;
                     }
                 }
+
+                isTeam = false;
             }
 
             @Override

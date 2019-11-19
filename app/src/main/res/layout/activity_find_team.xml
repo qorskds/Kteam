@@ -21,6 +21,11 @@
             android:id="@+id/findteamName"
             android:gravity="center"
             />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/findteamlocation"
+            />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

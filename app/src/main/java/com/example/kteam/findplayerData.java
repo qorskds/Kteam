@@ -9,7 +9,25 @@ public class findplayerData {
     private String postion;
     private String character;
     private String location;
+    private String uid;
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public findplayerData(String name, String bulid, String height, String postion, String character, String location, String uid) {
+        this.name = name;
+        this.bulid = bulid;
+        this.height = height;
+        this.postion = postion;
+        this.character = character;
+        this.location = location;
+        this.uid = uid;
+    }
 
     public findplayerData(String name, String bulid, String height, String postion, String character, String location) {
         this.name = name;
@@ -26,6 +44,7 @@ public class findplayerData {
         this.height = height;
         this.postion = postion;
         this.character = character;
+
 
     }
 

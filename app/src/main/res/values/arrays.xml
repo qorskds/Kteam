@@ -6,7 +6,6 @@
         <item>좋음</item>
         <item>아주좋음</item>
     </string-array>
-    
     <string-array name="city">
         <item>서울특별시</item>
         <item>부산광역시</item>
@@ -325,6 +324,33 @@
         <item>208</item>
         <item>209</item>
         <item>210</item>
+    </string-array>
+    <string-array name="position">
+       <item>ST</item>
+        <item>RF</item>
+        <item>LF</item>
+        <item>CF</item>
+        <item>RW</item>
+        <item>LW</item>
+        <item>RM</item>
+        <item>LM</item>
+        <item>RAM</item>
+        <item>LAM</item>
+        <item>CAM</item>
+        <item>LCM</item>
+        <item>RCM</item>
+        <item>CM</item>
+        <item>CDM</item>
+        <item>LDM</item>
+        <item>RDM</item>
+        <item>RWB</item>
+        <item>LWB</item>
+        <item>RB</item>
+        <item>LB</item>
+        <item>RCBv</item>
+        <item>LCB</item>
+        <item>CB</item>
+        <item>GK</item>
     </string-array>
 
     
