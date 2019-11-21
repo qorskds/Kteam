@@ -6,33 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".FindTeam"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     >
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:text="> 팀목록"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
 
-        <EditText
+        >
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="이름"
-            android:layout_gravity="center"
-            android:id="@+id/findteamName"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:text="팀 이름 "
             />
-        <Spinner
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/findteamlocation"
+            android:layout_weight="1"
+            android:text="리더 이름"
             />
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="검색"
-            android:gravity="center"
-            android:id="@+id/findteamNameButton"
+            android:layout_weight="1"
+            android:text="지역"
             />
+
 
     </LinearLayout>
 

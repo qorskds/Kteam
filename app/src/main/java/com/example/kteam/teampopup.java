@@ -37,7 +37,6 @@ public class teampopup extends AppCompatActivity {
         mdatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        setTheme(android.R.style.Theme_NoTitleBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teampopup);
         name = getIntent().getStringExtra("teamName");

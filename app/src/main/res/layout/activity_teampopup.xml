@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".teampopup"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     >
 
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         >
@@ -22,14 +23,14 @@
             android:textSize="25dp"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:id="@+id/teamPopupName"
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp">
         <TextView
@@ -39,9 +40,9 @@
             android:textSize="25dp"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:id="@+id/teamPopupLeader"
             />
 
@@ -49,7 +50,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         >
@@ -60,9 +61,9 @@
             android:textSize="25dp"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:id="@+id/teamPopupstadium"
             />
 
@@ -71,7 +72,7 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         >
@@ -82,9 +83,9 @@
             android:textSize="25dp"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:id="@+id/teamPopupTeamIntroduction"
             />
 
@@ -93,10 +94,12 @@
     <EditText
         android:layout_width="280dp"
         android:layout_height="100dp"
+        android:layout_marginTop="10dp"
         android:hint="신청서"
         android:gravity="center"
         android:layout_gravity="center"
         android:id="@+id/registerText"
+        android:background="@drawable/textbackgroudn"
         />
 
     <LinearLayout

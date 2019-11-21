@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TeamInformation"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        android:background="@drawable/textbackgroudn"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,12 +26,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="팀 이름 : "
-            android:textSize="25dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
             />
         <TextView
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="15dp"
             android:id="@+id/teamInformationName"
             />
         <LinearLayout
@@ -43,19 +53,21 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="팀장 : "
-            android:textSize="25dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="15dp"
             android:id="@+id/teamInformationLeader"
             />
 
@@ -63,7 +75,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         >
@@ -71,12 +83,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="주경기지역 : "
-            android:textSize="25dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="15dp"
             android:id="@+id/teamInformationstadium"
             />
 
@@ -85,65 +98,95 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="팀소개  : "
-            android:textSize="25dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="15dp"
             android:id="@+id/teamInformationsTeamIntroduction"
             />
 
 
     </LinearLayout>
+    </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="> 팀원"
+            android:textSize="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:textSize="17dp"
+                android:text="이름"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="포지션"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            tools:itemCount="10"
+            android:id="@+id/teamRecyclerView"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:layout_marginTop="5dp"
-        android:text="팀원"
+        android:text="> 대결"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:text="이름"
-            android:layout_weight="1"
-        />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_height="wrap_content"
-            android:text="포지션"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:itemCount="10"
-        android:id="@+id/teamRecyclerView"
-
+        android:layout_height="100dp"
+        tools:itemCount="3"
+        android:id="@+id/teamInformationMatchRecyclerView"
         />
 
 
-
-
-
+</LinearLayout>
 
 
 

@@ -31,8 +31,6 @@ public class FindTeam extends AppCompatActivity {
     private ArrayList<findteamData> arrayList;
     private LinearLayoutManager linearLayoutManager;
     private findteamrecyclerViewAdapter adapter;
-    private ArrayAdapter findteamlocationAdapter;
-    private Spinner findteamlocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +39,6 @@ public class FindTeam extends AppCompatActivity {
 
         mdatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-
-
-        findteamlocation = (Spinner) findViewById(R.id.findteamlocation);
-        findteamlocationAdapter = ArrayAdapter.createFromResource(this, R.array.city, R.layout.support_simple_spinner_dropdown_item);
-        findteamlocation.setAdapter(findteamlocationAdapter);
 
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -58,53 +51,11 @@ public class FindTeam extends AppCompatActivity {
 
 
 
-        Button findteamNameButton = (Button) findViewById(R.id.findteamNameButton);
-        final EditText findteamName = (EditText) findViewById(R.id.findteamName);
 
 
 
 
-        findteamNameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mdatabase.child("teams").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        arrayList.clear();
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            Log.e(findteamName.getText().toString(),"asdf");
-                            if (findteamName.getText().toString().equals("")) {
-                                if (dataSnapshot1.child("stadium").getValue().toString().equals(findteamlocation.getSelectedItem().toString())) {
-                                    findteamData data = new findteamData(dataSnapshot1.getKey(),
-                                            dataSnapshot1.child("teamLeader").getValue().toString(), dataSnapshot1.child("stadium").getValue().toString());
-                                    arrayList.add(data);
-                                    adapter.notifyDataSetChanged();
-                                }
 
-                            } else if (findteamName.getText().toString().equals(dataSnapshot1.getKey())) {
-                                if (dataSnapshot1.child("stadium").getValue().toString().equals(findteamlocation.getSelectedItem().toString())) {
-                                    findteamData data = new findteamData(dataSnapshot1.getKey(),
-                                            dataSnapshot1.child("teamLeader").getValue().toString(), dataSnapshot1.child("stadium").getValue().toString());
-                                    arrayList.add(data);
-                                    adapter.notifyDataSetChanged();
-                                }
-
-                            }
-                        }
-                        if(arrayList.size()==0){
-                            Toast.makeText(FindTeam.this,"위와 같은 팀은 없습니다.",Toast.LENGTH_SHORT).show();
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-        });
 
 
         mdatabase.child("teams").addValueEventListener(new ValueEventListener() {

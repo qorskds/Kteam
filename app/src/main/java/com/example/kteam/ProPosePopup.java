@@ -3,7 +3,9 @@ package com.example.kteam;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.ObjectsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,7 @@ public class ProPosePopup extends AppCompatActivity {
         mdatabase= FirebaseDatabase.getInstance().getReference();
         firebaseAuth= FirebaseAuth.getInstance();
 
+
         proposePopupinButton=(Button)findViewById(R.id.proposePopupinButton);
         proposePopupcloseButton=(Button)findViewById(R.id.proposePopupicloseButton);
 
@@ -46,6 +49,7 @@ public class ProPosePopup extends AppCompatActivity {
         proposePopupTeamName= (TextView)findViewById(R.id.proposePopupTeamName);
         proposePopupTeamLeader= (TextView)findViewById(R.id.proposePopupTeamLeader);
 
+
         proposePopupTeamName.setText(getIntent().getStringExtra("teamName"));
         final Map<String, Object> tmp2= new HashMap<>();
         tmp2.put("isRead","true");
@@ -53,7 +57,7 @@ public class ProPosePopup extends AppCompatActivity {
         proposePopupcloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mdatabase.child("users").child(firebaseAuth.getUid()).child("propose").updateChildren(tmp2);
+                mdatabase.child("users").child(firebaseAuth.getUid()).child("propose").child(proposePopupTeamName.getText().toString()).updateChildren(tmp2);
                 finish();
             }
         });
@@ -63,8 +67,8 @@ public class ProPosePopup extends AppCompatActivity {
                 Map<String, Object> tmp = new HashMap<>();
                 tmp.put("myTeamName",proposePopupTeamName.getText().toString());
                 mdatabase.child("users").child(firebaseAuth.getUid()).updateChildren(tmp);
-                mdatabase.child("users").child(firebaseAuth.getUid()).child("propose").updateChildren(tmp2);
-                finish();
+                mdatabase.child("users").child(firebaseAuth.getUid()).child("propose").child(proposePopupTeamName.getText().toString()).updateChildren(tmp2);
+                 finish();
             }
         });
 

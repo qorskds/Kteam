@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:paddingTop="30dp"
+        android:background="@color/black"
         >
 
         <LinearLayout
@@ -29,13 +30,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kteam"
+                android:textColor="#ffffff"
                 android:textSize="50dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="축구를 함께하다"
-                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:textSize="17dp"
                 />
         </LinearLayout>
 
@@ -53,10 +56,28 @@
             android:layout_height="wrap_content"
             android:text="로그인"
             android:textSize="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_marginLeft="200dp"
+                >
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아이디 저장"
+                    android:id="@+id/storeID"
+                    />
+            </LinearLayout>
+
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="40dp"
             android:id="@+id/userEmail"
             android:textSize="20dp"
@@ -65,32 +86,15 @@
 
             />
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:id="@+id/userPassword"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textSize="20dp"
             android:hint="패스워드"
             />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="아이디 저장"
-                android:id="@+id/storeID"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="자동 로그인"
-                android:id="@+id/autoID"
-                />
-
-        </LinearLayout>
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +113,6 @@
             />
 
 
-
-    </LinearLayout>
+</LinearLayout>
 
 </LinearLayout>

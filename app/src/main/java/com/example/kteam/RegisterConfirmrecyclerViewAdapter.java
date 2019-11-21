@@ -15,8 +15,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +64,7 @@ public class RegisterConfirmrecyclerViewAdapter extends RecyclerView.Adapter<Reg
         private RegisterConfrimData item;
         private AlertDialog dialog;
         private ViewGroup group;
+        private String teamName;
 
         private Map<String,Object > tmp;
 
@@ -83,14 +87,27 @@ public class RegisterConfirmrecyclerViewAdapter extends RecyclerView.Adapter<Reg
                     if (pos != RecyclerView.NO_POSITION) {
                         item = arrayList.get(pos);
                         tmp = new HashMap<>();
+
+
                         tmp.put("read","true");
+                        mdatabase.child("users").child(firebaseAuth.getUid()).child("myTeamName").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                teamName=dataSnapshot.getValue().toString();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                         builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                mdatabase.child("register").child(item.getName()).child(item.getUid()).updateChildren(tmp);
+                                mdatabase.child("register").child(teamName).child(item.getUid()).updateChildren(tmp);
                                 return;
                             }
                         });
@@ -100,7 +117,7 @@ public class RegisterConfirmrecyclerViewAdapter extends RecyclerView.Adapter<Reg
                             public void onClick(DialogInterface dialog, int which) {
 
                                 mdatabase.child("users").child(item.getUid()).child("myTeamName").setValue(item.getName());
-                                mdatabase.child("register").child(item.getName()).child(item.getUid()).updateChildren(tmp);
+                                mdatabase.child("register").child(teamName).child(item.getUid()).updateChildren(tmp);
 
                                 Toast.makeText(v.getContext(), "신청 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                 adapter.notifyDataSetChanged();

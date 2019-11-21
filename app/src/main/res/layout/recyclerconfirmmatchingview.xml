@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/textbackgroudn"
     android:layout_margin="10dp"
+    android:background="@drawable/textbackgroudn"
+    android:orientation="vertical"
     android:padding="10dp"
     >
     <LinearLayout
@@ -13,18 +14,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="팀 이름: "
+            android:text="이름: "
             android:textStyle="bold"
             android:textSize="25dp"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:id="@+id/findteamName"
 
-            />
+        <TextView
+            android:id="@+id/recyclerconfirmmatchingviewName"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
 
     </LinearLayout>
     <LinearLayout
@@ -32,45 +32,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="리더: "
-            android:textSize="25dp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:id="@+id/findteamTeamMembers"
-            />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="지역: "
             android:textStyle="bold"
-            android:textSize="25dp"
-            />
+            android:textSize="25dp" />
+
         <TextView
+            android:id="@+id/recyclerconfirmmatchingviewLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:layout_weight="1"
-            android:id="@+id/findteamlocation"
-
-            />
+            android:layout_marginLeft="5dp"/>
 
 
     </LinearLayout>
+
+
+
 </LinearLayout>
-
-

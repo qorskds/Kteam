@@ -5,30 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResigsterConfirm"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbackgroudn"
 
         >
         <TextView
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:textSize="30dp"
-            android:text="이름"/>
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:textSize="30dp"
-            android:text="소개"
-            />
+            android:text="지원자"/>
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:id="@+id/registerconfirmRecyclerView"
 
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매칭 신청"
+        android:textSize="25dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/regiserconfirmMatchingView"
         />
 
 

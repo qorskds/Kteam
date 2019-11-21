@@ -82,6 +82,8 @@ public class myproposalrecyclerViewAdapter extends RecyclerView.Adapter<mypropos
 
                     v.getContext().startActivity(intent);
 
+
+
                 }
             });
 

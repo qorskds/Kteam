@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TeamInformation extends AppCompatActivity {
     private DatabaseReference mdatabase;
@@ -36,6 +38,10 @@ public class TeamInformation extends AppCompatActivity {
     private String myTeamName;
     private ImageView teamInformationmessage;
     private ImageButton message;
+    private LinearLayoutManager linearLayoutManagermatch;
+    private ArrayList<teamMatchData> arrayListmatch;
+    private RecyclerView matchrecyclerview;
+    private teamMatchrecyclerViewAdapter adaptermatch;
 
 
     @Override
@@ -49,6 +55,16 @@ public class TeamInformation extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.teamRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        linearLayoutManagermatch= new LinearLayoutManager(this);
+        arrayListmatch= new ArrayList<>();
+        matchrecyclerview= (RecyclerView)findViewById(R.id.teamInformationMatchRecyclerView);
+        adaptermatch= new teamMatchrecyclerViewAdapter(arrayListmatch);
+        matchrecyclerview.setLayoutManager(linearLayoutManagermatch);
+        matchrecyclerview.setAdapter(adaptermatch);
+
+
+
 
         arrayList = new ArrayList<>();
         adapter = new recyclerViewAdapter(arrayList);
@@ -73,16 +89,37 @@ public class TeamInformation extends AppCompatActivity {
         });
 
 
+
         mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.getKey().equals("myTeamName")) {
                         myTeamName = dataSnapshot1.getValue().toString();
-
+                        Log.e(dataSnapshot1.getValue().toString(),"asdf");
+                        Log.e(myTeamName,"ddd");
                         teamInformationName.setText(myTeamName);
+                        Log.e(teamInformationName.getText().toString(),"asdaaaf");
                     }
                 }
+                mdatabase.child("teams").child(myTeamName).child("matchDate").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        teamMatchData tmp;
+                        for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                            tmp= new teamMatchData(myTeamName,dataSnapshot1.getKey());
+                            arrayListmatch.add(tmp);
+                            adaptermatch.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
 
 
                 mdatabase.child("teams").child(myTeamName).addValueEventListener(new ValueEventListener() {
@@ -100,9 +137,6 @@ public class TeamInformation extends AppCompatActivity {
 
                             } else if (dataSnapshot1.getKey().equals("teamLeaderUid") && dataSnapshot1.getValue().toString().equals(firebaseAuth.getUid())) {
                                 teamInformationmessage.setVisibility(View.VISIBLE);
-
-
-
                             }
 
                         }
@@ -144,6 +178,8 @@ public class TeamInformation extends AppCompatActivity {
 
             }
         });
+
+
 
 
     }

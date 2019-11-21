@@ -42,42 +42,45 @@ public class MyProposal extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+        adapter.notifyDataSetChanged();
+
+
+        mdatabase.child("users").child(firebaseAuth.getUid()).child("propose").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if(dataSnapshot1.getKey().equals("propose")) {
-                        if (dataSnapshot1.child("isRead").getValue().toString().equals("false")) {
-                            teamName = dataSnapshot1.child("teamName").getValue().toString();
-                            mdatabase.child("teams").child(teamName).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    myproposalData tmp = new myproposalData();
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        tmp.setTeamName(teamName);
-                                        if (dataSnapshot1.getKey().equals("stadium")) {
-                                            tmp.setStaditum(dataSnapshot1.getValue().toString());
-                                        } else if (dataSnapshot1.getKey().equals("teamInformation")) {
-                                            tmp.setTeamIntroduce(dataSnapshot1.getValue().toString());
-                                        } else if (dataSnapshot1.getKey().equals("teamLeader")) {
-                                            tmp.setTeamLeader(dataSnapshot1.getValue().toString());
-                                        }
+                    if (dataSnapshot1.child("isRead").getValue().toString().equals("false")) {
+                        teamName = dataSnapshot1.getKey();
+                        mdatabase.child("teams").child(teamName).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                myproposalData tmp = new myproposalData();
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    tmp.setTeamName(teamName);
+                                    if (dataSnapshot1.getKey().equals("stadium")) {
+                                        tmp.setStaditum(dataSnapshot1.getValue().toString());
+                                    } else if (dataSnapshot1.getKey().equals("teamInformation")) {
+                                        tmp.setTeamIntroduce(dataSnapshot1.getValue().toString());
+                                    } else if (dataSnapshot1.getKey().equals("teamLeader")) {
+                                        tmp.setTeamLeader(dataSnapshot1.getValue().toString());
                                     }
-
-                                    arrayList.add(tmp);
-                                    adapter.notifyDataSetChanged();
-
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                arrayList.add(tmp);
+                                adapter.notifyDataSetChanged();
 
-                                }
-                            });
+                            }
 
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     }
+
+
                 }
 
             }
@@ -90,4 +93,7 @@ public class MyProposal extends AppCompatActivity {
 
 
     }
+
+
 }
+

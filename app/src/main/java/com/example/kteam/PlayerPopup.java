@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -104,11 +105,12 @@ public class PlayerPopup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Map<String, Object> tmp = new HashMap<>();
-                tmp.put("teamName",teamName);
                 tmp.put("isRead","false");
 
 
-                mdatabase.child("users").child(uid).child("propose").updateChildren(tmp);
+                mdatabase.child("users").child(uid).child("propose").child(teamName).updateChildren(tmp);
+                Toast.makeText(getApplicationContext(),"신청 되었습니다",Toast.LENGTH_SHORT).show();
+                finish();
 
             }
         });

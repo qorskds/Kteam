@@ -80,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        LinearLayout matching= (LinearLayout)findViewById(R.id.matching);
+        matching.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Teamcompetition.class);
+                startActivity(intent);
+            }
+        });
         LinearLayout mainTeamFind =(LinearLayout)findViewById(R.id.mainTeamFind);
         mainTeamFind.setOnClickListener(new View.OnClickListener() {
             @Override

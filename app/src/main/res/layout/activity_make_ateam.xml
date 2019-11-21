@@ -30,43 +30,91 @@
         android:orientation="vertical"
         android:gravity="center"
         >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="  팀 이름"
+                />
 
             <EditText
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
+                android:layout_width="210dp"
+                android:layout_height="50dp"
                 android:hint="팀이름"
+                android:textSize="18dp"
                 android:id="@+id/teamName"
                 />
 
+
+
+        </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         >
         <TextView
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textSize="18dp"
             android:hint="팀장"
             />
         <TextView
             android:layout_width="230dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="18dp"
+            android:gravity="center"
             android:text="본인 이름입니다."
             />
     </LinearLayout>
-        <Spinner
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/stadiumSpinner"
+            >
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="  지역"
+                android:textSize="18dp"
+                android:layout_gravity="center"
 
-            />
-        <EditText
-            android:layout_width="280dp"
+                />
+            <Spinner
+                android:layout_width="170dp"
+                android:layout_height="40dp"
+                android:id="@+id/stadiumSpinner"
+
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="팀 소개"
-            android:id="@+id/teamInformation"
-            />
+
+            >
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="  팀 소개"
+
+
+                />
+            <EditText
+                android:layout_width="210dp"
+                android:layout_height="50dp"
+                android:textSize="18dp"
+                android:id="@+id/teamInformation"
+                />
+
+
+        </LinearLayout>
 
 
 
