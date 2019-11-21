@@ -31,6 +31,7 @@ public class FindTeam extends AppCompatActivity {
     private ArrayList<findteamData> arrayList;
     private LinearLayoutManager linearLayoutManager;
     private findteamrecyclerViewAdapter adapter;
+    private String myTeamName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +54,38 @@ public class FindTeam extends AppCompatActivity {
 
 
 
-
-
-
-
-
-        mdatabase.child("teams").addValueEventListener(new ValueEventListener() {
+        mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    if(dataSnapshot1.getKey().equals("myTeamName")){
+                        myTeamName=dataSnapshot1.getValue().toString();
+                    }
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    findteamData data = new findteamData(dataSnapshot1.getKey(),
-                            dataSnapshot1.child("teamLeader").getValue().toString(), dataSnapshot1.child("stadium").getValue().toString());
-                    arrayList.add(data);
-                    adapter.notifyDataSetChanged();
                 }
-                if (arrayList.size() == 0) {
-                    Toast.makeText(FindTeam.this, "위와 같은 이름의 팀이 없습니다.", Toast.LENGTH_SHORT).show();
-                    adapter.notifyDataSetChanged();
-                }
+                mdatabase.child("teams").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (!dataSnapshot1.getKey().equals(myTeamName)) {
+                                findteamData data = new findteamData(dataSnapshot1.getKey(),
+                                        dataSnapshot1.child("teamLeader").getValue().toString(), dataSnapshot1.child("stadium").getValue().toString());
+                                arrayList.add(data);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(FindTeam.this, "등록된 팀이 없습니다.", Toast.LENGTH_SHORT).show();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
@@ -80,6 +93,12 @@ public class FindTeam extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
 
 
     }

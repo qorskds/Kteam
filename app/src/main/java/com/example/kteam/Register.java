@@ -107,6 +107,7 @@ public class Register extends AppCompatActivity {
                             tmp.put("character",characterText.getText().toString());
                             tmp.put("locationText",locationSpinner.getSelectedItem().toString());
                             tmp.put("myTeamName","");
+                            tmp.put("propose","");
                             tmp.put("playerRegister",false);
 
                             mdatabase.child("users").child(uid).updateChildren(tmp);

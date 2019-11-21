@@ -116,11 +116,10 @@ public class RegisterConfirmrecyclerViewAdapter extends RecyclerView.Adapter<Reg
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                mdatabase.child("users").child(item.getUid()).child("myTeamName").setValue(item.getName());
+                                mdatabase.child("users").child(item.getUid()).child("myTeamName").setValue(teamName);
                                 mdatabase.child("register").child(teamName).child(item.getUid()).updateChildren(tmp);
 
                                 Toast.makeText(v.getContext(), "신청 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                                adapter.notifyDataSetChanged();
 
 
                             }

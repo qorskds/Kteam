@@ -68,16 +68,21 @@ public class TeamcompetitonrecyclerViewAdapter extends RecyclerView.Adapter<Team
         private AlertDialog dialog;
         private TeamcompetitionData item;
         private String myTeamName;
+        private Boolean already;
 
         public CustomViewHolder(@NonNull final View itemView) {
             super(itemView);
+
 
             recyclerteamcompetitionTime = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionTime);
             recyclerteamcompetitionteamName = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionteamName);
             recyclerteamcompetitionArea = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionArea);
             recyclerteamcompetitionLocation = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionLocation);
             recyclerteamcompetitionComent = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionComent);
-            recyclerteamcompetitionRegister= (TextView)itemView.findViewById(R.id.recyclerteamcompetitionRegister);
+            recyclerteamcompetitionRegister = (TextView) itemView.findViewById(R.id.recyclerteamcompetitionRegister);
+            already = false;
+            mdatabase = FirebaseDatabase.getInstance().getReference();
+            firebaseAuth = FirebaseAuth.getInstance();
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,19 +94,16 @@ public class TeamcompetitonrecyclerViewAdapter extends RecyclerView.Adapter<Team
                     }
                 }
             });
-            mdatabase = FirebaseDatabase.getInstance().getReference();
-            firebaseAuth = FirebaseAuth.getInstance();
-
             mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                        if(dataSnapshot1.getKey().equals("myTeamName")){
-                            myTeamName=dataSnapshot1.getValue().toString();
-                            return;
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        if (dataSnapshot1.getKey().equals("myTeamName")) {
+                            myTeamName = dataSnapshot1.getValue().toString();
                         }
 
                     }
+
                 }
 
                 @Override
@@ -109,34 +111,80 @@ public class TeamcompetitonrecyclerViewAdapter extends RecyclerView.Adapter<Team
 
                 }
             });
+
+
             recyclerteamcompetitionRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
                     itemView.callOnClick();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setMessage("정말 신청하시겠습니까?");
-                    builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(view.getContext(),"취소 되었습니다.",Toast.LENGTH_SHORT);
-                            return;
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                if (dataSnapshot1.getKey().equals("myTeamName")) {
+                                    myTeamName = dataSnapshot1.getValue().toString();
+                                }
+
+                            }
+
                         }
-                    });
-                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Map<String,Object> tmp = new HashMap<>();
-                            tmp.put("isRead",false);
-                            mdatabase.child("teams").child(item.getName()).child("matching").child(myTeamName).setValue(tmp);
-                            Toast.makeText(view.getContext(),"신청 완료 되었습니다.",Toast.LENGTH_SHORT);
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
-                    dialog = builder.create();
-                    dialog.show();
+                    mdatabase.child("teams").child(item.getName()).child("matching").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                if (dataSnapshot1.getKey().equals(myTeamName)) {
+                                    already = true;
+                                }
+                            }
+
+                            if (already) {
+                                Toast.makeText(itemView.getContext(), "이미 신청 되어있습니다.", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                builder.setMessage("정말 신청하시겠습니까?");
+                                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(itemView.getContext(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                });
+                                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Map<String, Object> tmp = new HashMap<>();
+                                        tmp.put("isRead", false);
+                                        mdatabase.child("teams").child(item.getName()).child("matching").child(myTeamName).setValue(tmp);
+                                        Toast.makeText(itemView.getContext(), "신청 완료 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+                                dialog = builder.create();
+                                dialog.show();
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
 
                 }
+
+
             });
 
         }

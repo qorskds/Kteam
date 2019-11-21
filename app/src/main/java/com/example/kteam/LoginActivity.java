@@ -3,7 +3,9 @@ package com.example.kteam;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
+    private CheckBox checkBoxid;
+    private CheckBox checkBoxpwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +33,38 @@ public class LoginActivity extends AppCompatActivity {
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
 
+        SharedPreferences pref= getSharedPreferences("pref", Activity.MODE_PRIVATE);
+
+        String id =pref.getString("id_save","");
+        String pawd= pref.getString("pwd_save","");
+        Boolean checkid= pref.getBoolean("checkid",false);
+        Boolean checkpwd=pref.getBoolean("checkpwd",false);
+
+
         TextView register = (TextView)findViewById(R.id.register);
         Button loginButton = (Button)findViewById(R.id.LoginButton);
         emailEditText = (EditText)findViewById(R.id.userEmail);
         passwordEditText= (EditText)findViewById(R.id.userPassword);
+        checkBoxid= (CheckBox)findViewById(R.id.storeID);
+        checkBoxpwd=(CheckBox)findViewById(R.id.storePwd);
+
+        final SharedPreferences.Editor editor = pref.edit();
+
+        if(checkid==true){
+            emailEditText.setText(id);
+            checkBoxid.setChecked(checkid);
+        }
+        if(checkpwd==true){
+            passwordEditText.setText(pawd);
+            checkBoxpwd.setChecked(checkpwd);
+        }
+
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEditText.getText().toString();
+                final String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if(email.isEmpty()||password.isEmpty()){
 
@@ -49,6 +77,11 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             finish();
+                            editor.putString("id_save",emailEditText.getText().toString());
+                            editor.putBoolean("checkid",checkBoxid.isChecked());
+                            editor.putString("pwd_save",passwordEditText.getText().toString());
+                            editor.putBoolean("checkpwd",checkBoxpwd.isChecked());
+                            editor.commit();
                             LoginActivity.this.startActivity(intent);
                         }else{
                             Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();

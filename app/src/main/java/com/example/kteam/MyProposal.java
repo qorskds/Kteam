@@ -49,6 +49,7 @@ public class MyProposal extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
                     if (dataSnapshot1.child("isRead").getValue().toString().equals("false")) {
                         teamName = dataSnapshot1.getKey();
                         mdatabase.child("teams").child(teamName).addValueEventListener(new ValueEventListener() {

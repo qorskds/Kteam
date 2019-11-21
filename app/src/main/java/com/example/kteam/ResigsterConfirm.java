@@ -69,6 +69,8 @@ public class ResigsterConfirm extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+
+
         mdatabase.child("teams").child(teamName).child("matching").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -110,8 +112,6 @@ public class ResigsterConfirm extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.child("read").getValue().toString().equals("false")) {
-                        Log.e("dataSnapshot1.getKey()",dataSnapshot1.getKey());
-
                         mdatabase.child("users").child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -14,11 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class Teamcompetition extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DatabaseReference mdatabase;
+    private FirebaseAuth firebaseAuth;
+    private String teamName;
 
 
     private TextView register;
@@ -41,6 +46,7 @@ public class Teamcompetition extends AppCompatActivity {
         setContentView(R.layout.activity_teamcompetition);
 
         mdatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth =FirebaseAuth.getInstance();
 
         arrayList = new ArrayList<>();
         adapter = new TeamcompetitonrecyclerViewAdapter(arrayList);
@@ -54,8 +60,28 @@ public class Teamcompetition extends AppCompatActivity {
         competitionMatchingbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(teamName.equals("")){
+                    Toast.makeText(getApplicationContext(),"팀이 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getApplicationContext(), machingRegister.class);
                 startActivity(intent);
+            }
+        });
+        mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    if(dataSnapshot1.getKey().equals("myTeamName")){
+                        teamName=dataSnapshot1.getValue().toString();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -63,11 +89,13 @@ public class Teamcompetition extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    TeamcompetitionData tmp = new TeamcompetitionData(dataSnapshot1.getKey(), dataSnapshot1.child("Area").getValue().toString(),
-                            dataSnapshot1.child("Location").getValue().toString()
-                            , dataSnapshot1.child("Coment").getValue().toString(), dataSnapshot1.child("Time").getValue().toString());
-                    arrayList.add(tmp);
-                    adapter.notifyDataSetChanged();
+                    if (!dataSnapshot1.getKey().equals(teamName)) {
+                        TeamcompetitionData tmp = new TeamcompetitionData(dataSnapshot1.getKey(), dataSnapshot1.child("Area").getValue().toString(),
+                                dataSnapshot1.child("Location").getValue().toString()
+                                , dataSnapshot1.child("Coment").getValue().toString(), dataSnapshot1.child("Time").getValue().toString());
+                        arrayList.add(tmp);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 

@@ -43,6 +43,7 @@ public class FindPlayer extends AppCompatActivity {
     private Spinner findhighheight;
     private boolean height;
     private Spinner findpositon;
+    private String myName;
     private ArrayAdapter findpositonadapter;
 
 
@@ -139,26 +140,40 @@ public class FindPlayer extends AppCompatActivity {
                 });
             }
         });
-
-        mdatabase.child("users").addValueEventListener(new ValueEventListener() {
-
+        mdatabase.child("users").child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                   if( dataSnapshot1.getKey().equals("nicknameText")){
+                       myName= dataSnapshot1.getValue().toString();
+                   }
+                }
+                mdatabase.child("users").addValueEventListener(new ValueEventListener() {
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.hasChildren()) {
-                        if (dataSnapshot1.child("playerRegister").getValue().equals(true)) {
-                            findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
-                                    dataSnapshot1.child("bulid").getValue().toString(), dataSnapshot1.child("heightText").getValue().toString(),
-                                    dataSnapshot1.child("positionText").getValue().toString(), dataSnapshot1.child("character").getValue().toString(), dataSnapshot1.child("locationText").getValue().toString(),dataSnapshot1.getKey());
-                            arrayList.add(tmp);
-                            adapter.notifyDataSetChanged();
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (dataSnapshot1.hasChildren()&&!dataSnapshot1.child("nicknameText").getValue().toString().equals(myName)) {
+                                if (dataSnapshot1.child("playerRegister").getValue().equals(true)) {
+                                    findplayerData tmp = new findplayerData(dataSnapshot1.child("nicknameText").getValue().toString(),
+                                            dataSnapshot1.child("bulid").getValue().toString(), dataSnapshot1.child("heightText").getValue().toString(),
+                                            dataSnapshot1.child("positionText").getValue().toString(), dataSnapshot1.child("character").getValue().toString(), dataSnapshot1.child("locationText").getValue().toString(),dataSnapshot1.getKey());
+                                    arrayList.add(tmp);
+                                    adapter.notifyDataSetChanged();
+
+                                }
+                            }
+
 
                         }
                     }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
+                    }
+                });
             }
 
             @Override
@@ -166,6 +181,8 @@ public class FindPlayer extends AppCompatActivity {
 
             }
         });
+
+
         findhighheight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

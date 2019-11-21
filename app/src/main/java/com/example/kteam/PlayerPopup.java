@@ -27,6 +27,7 @@ public class PlayerPopup extends AppCompatActivity {
     private DatabaseReference mdatabase;
     private FirebaseAuth firebaseAuth;
     private String teamName;
+    private Boolean already;
 
 
     @Override
@@ -35,6 +36,9 @@ public class PlayerPopup extends AppCompatActivity {
         setContentView(R.layout.activity_player_popup);
         mdatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+
+        teamName="";
+        already=false;
 
         final TextView playerPopupName = (TextView) findViewById(R.id.playerPopupName);
         final TextView playerPopupAge = (TextView) findViewById(R.id.playerPopupAge);
@@ -52,8 +56,12 @@ public class PlayerPopup extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if(dataSnapshot1.getKey().equals("myTeamName")){
+                    if(dataSnapshot1.getKey().equals("myTeamName")&&!dataSnapshot1.getValue().toString().equals("")){
                         teamName=dataSnapshot1.getValue().toString();
+
+
+                    }else{
+
                     }
 
                 }
@@ -65,33 +73,12 @@ public class PlayerPopup extends AppCompatActivity {
 
             }
         });
-
-
-        mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        mdatabase.child("users").child(uid).child("propose").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-
-                    if (dataSnapshot1.getKey().equals("ageText")) {
-                        playerPopupAge.setText(dataSnapshot1.getValue().toString());
-
-                    } else if (dataSnapshot1.getKey().equals("bulid")) {
-                        playerPopupBuild.setText(dataSnapshot1.getValue().toString());
-
-                    } else if (dataSnapshot1.getKey().equals("heightText")) {
-                        playerPopupHeight.setText(dataSnapshot1.getValue().toString());
-
-                    } else if (dataSnapshot1.getKey().equals("nicknameText")) {
-                        playerPopupName.setText(dataSnapshot1.getValue().toString());
-
-                    } else if (dataSnapshot1.getKey().equals("positionText")) {
-                        playerPopupPosition.setText(dataSnapshot1.getValue().toString());
-
-                    } else if (dataSnapshot1.getKey().equals("locationText")) {
-                        playerPopupLocation.setText(dataSnapshot1.getValue().toString());
-                    } else if (dataSnapshot1.getKey().equals("character")) {
-                        playerPopupcharacter.setText(dataSnapshot1.getValue().toString());
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    if(dataSnapshot1.getKey().equals(teamName)){
+                        already=true;
                     }
                 }
             }
@@ -101,16 +88,64 @@ public class PlayerPopup extends AppCompatActivity {
 
             }
         });
+                mdatabase.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+
+                            if (dataSnapshot1.getKey().equals("ageText")) {
+                                playerPopupAge.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("bulid")) {
+                                playerPopupBuild.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("heightText")) {
+                                playerPopupHeight.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("nicknameText")) {
+                                playerPopupName.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("positionText")) {
+                                playerPopupPosition.setText(dataSnapshot1.getValue().toString());
+
+                            } else if (dataSnapshot1.getKey().equals("locationText")) {
+                                playerPopupLocation.setText(dataSnapshot1.getValue().toString());
+                            } else if (dataSnapshot1.getKey().equals("character")) {
+                                playerPopupcharacter.setText(dataSnapshot1.getValue().toString());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
         playerPopupPropose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Map<String, Object> tmp = new HashMap<>();
                 tmp.put("isRead","false");
 
+                if(teamName.equals("")){
+                    Toast.makeText(getApplicationContext(),"팀이 없습니다.",Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    if (already){
+                        Toast.makeText(getApplicationContext(),"이미 신청 되어있습니다",Toast.LENGTH_SHORT).show();
 
-                mdatabase.child("users").child(uid).child("propose").child(teamName).updateChildren(tmp);
-                Toast.makeText(getApplicationContext(),"신청 되었습니다",Toast.LENGTH_SHORT).show();
-                finish();
+                    }else{
+                        mdatabase.child("users").child(uid).child("propose").child(teamName).updateChildren(tmp);
+                        Toast.makeText(getApplicationContext(),"신청 되었습니다",Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    }
+
+                }
+
 
             }
         });

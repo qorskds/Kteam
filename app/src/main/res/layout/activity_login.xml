@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:gravity="center"
         android:paddingTop="30dp"
@@ -59,21 +58,6 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:layout_marginLeft="200dp"
-                >
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="아이디 저장"
-                    android:id="@+id/storeID"
-                    />
-            </LinearLayout>
 
 
         <EditText
@@ -95,6 +79,26 @@
             android:textSize="20dp"
             android:hint="패스워드"
             />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이디 저장"
+                android:id="@+id/storeID"
+                />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호 저장"
+                android:id="@+id/storePwd"
+                />
+
+        </LinearLayout>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
